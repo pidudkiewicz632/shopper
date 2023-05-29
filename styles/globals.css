@@ -1,0 +1,15 @@
+#interactive {
+  display: flex;
+  max-width: 100%;
+  min-height: 50vh;
+}
+
+#interactive video {
+  max-width: 100%;
+}
+
+#interactive .drawingBuffer {
+  position: absolute;
+  left: 0;
+  max-width: 100%;
+}
