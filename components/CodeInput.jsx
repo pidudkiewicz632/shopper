@@ -9,6 +9,7 @@ export default ({ label, helperText, errorMessage, handelChange, validationState
 
     const onDetected = result => {
         setInput(result);
+        handelChange(result);
         onClose();
     };
 

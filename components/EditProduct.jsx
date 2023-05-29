@@ -53,7 +53,6 @@ export default ({ data, editMode }) => {
         newValidationState.productDesc = /^[a-zA-Z0-9 .,-:]{10,200}$/.test(productDesc);
         newValidationState.productCode = /^\d{1,13}$/.test(productCode);
         [newValidationState.productImages, newMessaageState.productImages] = imagesValidation();
-
         setValidationStates(newValidationState);
 
         if (!newValidationState.productName) {
