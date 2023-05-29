@@ -27,9 +27,9 @@ const ProductSchema = new mongoose.Schema(
         message: "Illegal characters were used!",
       },
     },
-    img: {
-      type: String,
-      required: true,
+    images: {
+      type: [String],
+      required: false,
     },
     barcode: {
       type: String,
@@ -42,7 +42,17 @@ const ProductSchema = new mongoose.Schema(
       },
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    versionKey: false,
+    id: true,
+    toJSON: {
+      transform(doc, ret) {
+        ret.id = ret._id
+        delete ret._id
+      }
+    }
+  },
 );
 
 export default mongoose.models.Product ||

@@ -11,7 +11,7 @@ export default ({label, helperText, handelChange, errorMessage, validationState,
     };
   
     return (
-      <FormControl {...rest} >
+      <FormControl isInvalid={!validationState} {...rest} >
         <FormLabel>{label}</FormLabel>
         <Input type='file' onChange={handleInputChange} bg={useColorModeValue('white.200', 'white.700')} multiple/>
         {validationState ? (

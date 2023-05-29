@@ -37,6 +37,12 @@ export default ({ data, editMode }) => {
         }
     }, []);
 
+    const imagesValidation = () => {
+        if (productImages.length > 4) {
+            return [false, 'Maksymalna licza zdjęć to 4.']
+        }
+    }
+
     const validation = () => {
         const newValidationState = {};
         const newMessaageState = {};
@@ -44,6 +50,7 @@ export default ({ data, editMode }) => {
         newValidationState.productName = /^[a-zA-Z0-9 -]{3,60}$/.test(productName);
         newValidationState.productDesc = /^[a-zA-Z0-9 .,-:]{10,200}$/.test(productDesc);
         newValidationState.productCode = /^\d{1,13}$/.test(productCode);
+        [newValidationState.productImages, newMessaageState.productImages] = imagesValidation();
 
         setValidationStates(newValidationState);
 
@@ -107,11 +114,24 @@ export default ({ data, editMode }) => {
                     })
                 });
             } else {
-                axios.post('/api/products/', {
-                    name: productName,
-                    desc: productDesc,
-                    barcode: productCode,
-                }).then((res) => {
+                const formData = new FormData();
+
+                formData.append('name', productName);
+                formData.append('desc', productDesc);
+                formData.append('barcode', productCode);
+                let index = 0;
+
+                for (const image of productImages) {
+                    formData.append('file' + index, image);
+                    index++;
+                }
+
+                axios.post('/api/products/', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+                ).then((res) => {
                     toast({
                         title: 'Dodawanie Produktu.',
                         description: "Produktu został dodany.",
@@ -153,14 +173,14 @@ export default ({ data, editMode }) => {
                 mt={3}
                 value={productDesc}
             />
-            <FileInput 
+            <FileInput
                 label={'Zdjęcia'}
                 helperText={'podaj zdjęcia produktu'}
                 handelChange={setProductImages}
                 errorMessage={validationMessages.productImages}
                 validationState={validationStates.productImages}
                 mt={3}
-                w={'20%'}
+                w={{ base: '100%', sm: '70%', md: '55%', lg: '20%' }}
             />
             <CodeInput
                 label={'Kod Produktu'}

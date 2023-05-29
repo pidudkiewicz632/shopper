@@ -1,4 +1,4 @@
-import Shop from "@/models/Shop";
+import Product from "@/models/Product";
 import dbConnect from "@/utils/dbConnection";
 
 const handler = async (req, res) => {
@@ -11,9 +11,9 @@ const handler = async (req, res) => {
 
     if (method === "GET") {
         try {
-            const shop = await Shop.findById(id);
+            const product = await Product.findById(id);
 
-            res.status(200).json(shop);
+            res.status(200).json(product);
         } catch (err) {
             console.log(err);
             res.status(500).json(err);
@@ -22,11 +22,11 @@ const handler = async (req, res) => {
 
     if (method === "PATCH") {
         try {
-            const shop = await Shop.findOneAndUpdate({
+            const product = await Product.findOneAndUpdate({
                 _id: id
             }, req.body);
 
-            return res.status(200).json(shop);
+            return res.status(200).json(product);
         } catch (err) {
             console.log(err);
             return res.status(500).json(err);
@@ -35,7 +35,7 @@ const handler = async (req, res) => {
 
     if (method === "DELETE") {
         try {
-            await Shop.deleteOne({
+            await Product.deleteOne({
                 _id: id
             });
 
