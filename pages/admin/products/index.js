@@ -26,7 +26,7 @@ const ProductItem = ({ product, showConfirm, index }) => {
                     <Text>{product.name}</Text>
                 </Flex>
                 <Flex gap={3}>
-                    <Link href={`/admin/products/edit/${product.id}`}>
+                    <Link href={`/admin/products/prices/${product.id}`}>
                         <IconButton colorScheme="blue">
                             <GiPriceTag />
                         </IconButton>

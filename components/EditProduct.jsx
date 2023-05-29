@@ -41,6 +41,8 @@ export default ({ data, editMode }) => {
         if (productImages.length > 4) {
             return [false, 'Maksymalna licza zdjęć to 4.']
         }
+
+        return [true, ''];
     }
 
     const validation = () => {
@@ -91,11 +93,25 @@ export default ({ data, editMode }) => {
 
     const addProduct = () => {
         if (validation()) {
+            const formData = new FormData();
+
+            formData.append('name', productName);
+            formData.append('desc', productDesc);
+            formData.append('barcode', productCode);
+            let index = 0;
+
+            if(productImages) {
+                for (const image of productImages) {
+                    formData.append('file' + index, image);
+                    index++;
+                }
+            }
+
             if (editMode) {
-                axios.patch(`/api/shops/${data.id}`, {
-                    name: productName,
-                    desc: productDesc,
-                    barcode: productCode,
+                axios.patch(`/api/products/update/${data.id}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
                 }).then((res) => {
                     toast({
                         title: 'Aktualizacja Produktu.',
@@ -154,7 +170,7 @@ export default ({ data, editMode }) => {
 
     return (
         <AdminLayout>
-            <Text fontSize='3xl' as='h2'>Dodawanie produktu</Text>
+            <Text fontSize='3xl' as='h2'>{editMode ? 'Edytowanie produktu' : 'Dodawanie produktu'}</Text>
             <TextInput
                 label={'Nazwa Produktu'}
                 helperText={'podaj nazwę produktu'}

@@ -14,7 +14,7 @@ import {
 
 const linkItems = [
     { name: 'Sklepy', url: '/admin/shops' },
-    { name: 'Produkty', url: '/admin/shops'  },
+    { name: 'Produkty', url: '/admin/products'  },
 ];
 
 const NavItem = ({ children, url }) => {

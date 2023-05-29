@@ -20,19 +20,6 @@ const handler = async (req, res) => {
         }
     }
 
-    if (method === "PATCH") {
-        try {
-            const product = await Product.findOneAndUpdate({
-                _id: id
-            }, req.body);
-
-            return res.status(200).json(product);
-        } catch (err) {
-            console.log(err);
-            return res.status(500).json(err);
-        }
-    }
-
     if (method === "DELETE") {
         try {
             await Product.deleteOne({
